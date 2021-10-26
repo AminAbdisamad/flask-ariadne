@@ -38,3 +38,13 @@ def update_post_resolver(obj, info, id: str, title: str, description: str) -> di
         }
 
     return payload
+
+
+def delete_post(obj, info, id: str) -> dict:
+    try:
+        post = Post.query.get(id)
+        post.delete()
+        payload = {"post": post.to_dict(), "success": True}
+    except AttributeError:
+        payload = {"success": False, "errors": [f"Not Found"]}
+    return payload
