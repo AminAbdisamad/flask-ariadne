@@ -1,5 +1,4 @@
-from app import db
-from datetime import datetime
+from init import db
 
 
 class Post(db.Model):
