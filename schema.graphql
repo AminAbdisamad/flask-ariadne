@@ -3,6 +3,7 @@ schema {
   mutation: Mutation
 }
 
+# Post Types
 type Post {
   id: ID!
   title: String!
@@ -21,17 +22,79 @@ type PostsResult {
   posts: [Post]
 }
 
+#User Types
+type User {
+  id: ID!
+  username: String!
+  email: String!
+  role: String!
+  password: String!
+  created_at: String!
+}
+
+type UserResult {
+  success: Boolean!
+  errors: [String]
+  user: User
+}
+type UsersResult {
+  success: Boolean!
+  errors: [String]
+  users: [User]
+}
+
+# User Login
+# return {
+#             'success': True,
+#             'role': current_user.role.name,
+#             'access_token': access_token,
+#             'refresh_token': refresh_token
+#         }
+#     return {'success': False, 'message': 'Invalid email or password'}
+type UserLogin {
+  email: String!
+  password: String!
+}
+
+type UserLoginResult {
+  success: Boolean!
+  errors: [String]
+  role: String!
+  access_token: String!
+  refresh_token: String!
+}
 type Query {
+  # Posts
   listPosts: PostsResult!
   getPost(postId: ID!): PostResult!
+
+  # Users
+  listUsers: UsersResult!
+  getUser(userId: ID!): UserResult!
 }
 
 type Mutation {
-  createPost(
-    title: String!
-    description: String!
-    created_at: String
-  ): PostResult!
+  # Posts
+  createPost(title: String!, description: String!): PostResult!
   updatePost(id: ID!, title: String, description: String): PostResult!
   deletePost(id: ID!): PostResult!
+
+  # Users
+  createUser(
+    username: String!
+    email: String!
+    role: String
+    password: String!
+  ): UserResult!
+  updateUser(
+    userId: ID!
+    username: String!
+    email: String!
+    role: String
+    password: String!
+  ): UserResult!
+  deleteUser(userId: ID!): UserResult!
+
+  # Login & Auth
+  Login(email: String!, password: String!): UserLoginResult
 }

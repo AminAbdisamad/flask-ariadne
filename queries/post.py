@@ -1,5 +1,5 @@
 from ariadne import convert_kwargs_to_snake_case
-from model import Post
+from models.post import Post
 
 
 def list_posts_resolver(obj, info) -> dict:
